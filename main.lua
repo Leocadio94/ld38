@@ -12,13 +12,16 @@ function love.load()
 	input = require "classes.input"
 	planet = require "classes.planet" (gameWidth/2, gameHeight/2)
 	player = require "classes.player" (gameWidth/2, gameHeight/2 - planet.width/2)
+	gun = require "classes.gun" (player.x + player.ox + 5, player.y)
 end
 
 function love.update(dt)
 	lurker.update()
 	input:update()
+
 	planet:update(dt)
 	player:update(dt)
+	gun:update(dt)
 end
 
 function love.draw()
@@ -29,6 +32,7 @@ function love.draw()
 
 	planet:draw()
 	player:draw()
+	gun:draw()
 
 	push:finish()
 end
