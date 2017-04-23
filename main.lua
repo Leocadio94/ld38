@@ -10,13 +10,15 @@ function love.load()
 	push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false})
 
 	input = require "classes.input"
-	world = require "classes.world" (gameWidth/2, gameHeight/2)
+	planet = require "classes.planet" (gameWidth/2, gameHeight/2)
+	player = require "classes.player" (gameWidth/2, gameHeight/2 - planet.width/2)
 end
 
 function love.update(dt)
 	lurker.update()
 	input:update()
-	world:update(dt)
+	planet:update(dt)
+	player:update(dt)
 end
 
 function love.draw()
@@ -25,7 +27,8 @@ function love.draw()
 	love.graphics.print("Hello World!", x, y)
 	love.graphics.draw(bg, 0, 0)
 
-	world:draw()
+	planet:draw()
+	player:draw()
 
 	push:finish()
 end
