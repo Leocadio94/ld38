@@ -14,6 +14,9 @@ function love.load()
 	planet = require "classes.planet" (gameWidth/2, gameHeight/2)
 	player = require "classes.player" (gameWidth/2, gameHeight/2 - planet.width/2)
 	gun = require "classes.gun" (player.x + player.ox + 5, player.y)
+
+	gameMusic:setLooping(true)
+	gameMusic:play()
 end
 
 function love.update(dt)

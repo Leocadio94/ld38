@@ -12,3 +12,5 @@ deathSound = love.audio.newSource("assets/sounds/death.wav", "static")
 selectSound = love.audio.newSource("assets/sounds/select.wav", "static")
 shootSound = love.audio.newSource("assets/sounds/shoot.wav", "static")
 walkSound = love.audio.newSource("assets/sounds/walk.wav", "static")
+
+gameMusic = love.audio.newSource("assets/music/game.wav")

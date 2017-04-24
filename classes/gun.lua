@@ -26,27 +26,27 @@ function Gun:new(x, y)
 end
 
 function Gun:update(dt)
-    if input.up then
-        if self.sx == 1 then
-            if self.r > -1 then
-                self.r = self.r - self.speed * dt
-            end
-        else
-            if self.r < 1 then
-                self.r = self.r + self.speed * dt
-            end
-        end
-    elseif input.down then
-        if self.sx == 1 then
-            if self.r < 1 then
-                self.r = self.r + self.speed * dt
-            end
-        else
-            if self.r > -1 then
-                self.r = self.r - self.speed * dt
-            end
-        end
-    end
+    -- if input.up then
+    --     if self.sx == 1 then
+    --         if self.r > -1 then
+    --             self.r = self.r - self.speed * dt
+    --         end
+    --     else
+    --         if self.r < 1 then
+    --             self.r = self.r + self.speed * dt
+    --         end
+    --     end
+    -- elseif input.down then
+    --     if self.sx == 1 then
+    --         if self.r < 1 then
+    --             self.r = self.r + self.speed * dt
+    --         end
+    --     else
+    --         if self.r > -1 then
+    --             self.r = self.r - self.speed * dt
+    --         end
+    --     end
+    -- end
 
 
     if player.sx == 1 then
@@ -95,6 +95,7 @@ function Gun:shoot (dt)
             self.canShoot = false
             self.canShootTimer = self.canShootTimerMax
 
+            shootSound:setVolume(0.9)
             shootSound:play()
             love.timer.sleep(0.001)
             shootSound:rewind()
