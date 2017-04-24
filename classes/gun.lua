@@ -26,7 +26,6 @@ function Gun:new(x, y)
 end
 
 function Gun:update(dt)
-    print (self.r)
     if input.up then
         if self.sx == 1 then
             if self.r > -1 then
@@ -95,6 +94,10 @@ function Gun:shoot (dt)
             table.insert(self.bullets, bullet)
             self.canShoot = false
             self.canShootTimer = self.canShootTimerMax
+
+            shootSound:play()
+            love.timer.sleep(0.001)
+            shootSound:rewind()
         end
     else
         self.animation = self.animations.idle

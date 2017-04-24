@@ -17,15 +17,19 @@ function Player:new(x, y)
         running = anim8.newAnimation(self.g('1-3', 2), 0.1)
     }
     self.animation = self.animations.idle
+
+    bornSound:play()
 end
 
 function Player:update(dt)
     if input.right then
         self.animation = self.animations.running
         self.sx = 1
+        walkSound:play()
     elseif input.left then
         self.animation = self.animations.running
         self.sx = -1
+        walkSound:play()
     else
         self.animation = self.animations.idle
     end
