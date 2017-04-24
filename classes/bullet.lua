@@ -25,13 +25,14 @@ function Bullet:draw()
 end
 
 function Bullet:destroy()
-	if self.x < 0-self.width then return true end
-	if self.x > gameWidth then return true end
-
-	if self.y < 0-self.height then return true end
-	if self.y > gameHeight then return true end
-
-    return false
+	if self.x < 0-self.width or
+    	self.x > gameWidth or
+    	self.y < 0-self.height or
+    	self.y > gameHeight then
+        return true
+    else
+        return false
+    end
 end
 
 return Bullet

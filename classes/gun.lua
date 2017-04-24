@@ -13,13 +13,13 @@ function Gun:new(x, y)
     self.r = 0
     self.g = anim8.newGrid(20, 20, gunAnimation:getWidth(), gunAnimation:getHeight())
 	self.animations = {
-        idle = anim8.newAnimation(self.g('1-3', 1), 0.1),
-        shoot = anim8.newAnimation(self.g('1-3', 2), 0.1)
+        idle = anim8.newAnimation(self.g('1-4', 1), 0.1),
+        shoot = anim8.newAnimation(self.g('1-4', 2), 0.1)
     }
     self.animation = self.animations.idle
     self.bullets = {}
 	self.canShoot = true
-	self.canShootTimerMax = 0.2
+	self.canShootTimerMax = 0.3
 	self.canShootTimer = self.canShootTimerMax
 end
 
@@ -37,19 +37,26 @@ function Gun:update(dt)
 		self.canShoot = true
 	end
 
-	if input.space and self.canShoot then
-		self:shoot()
-        self.canShoot = false
-        self.canShootTimer = self.canShootTimerMax
+	if input.space then
+        self.animation = self.animations.shoot
+
+        if self.canShoot then
+    		self:shoot()
+            self.canShoot = false
+            self.canShootTimer = self.canShootTimerMax
+        end
 	else
         self.animation = self.animations.idle
     end
 
-    self.animation:update(dt)
-
     for v,bul in ipairs(self.bullets) do
         bul:update(dt)
+        if bul:destroy() then
+            table.remove(self.bullets, v)
+        end
     end
+
+    self.animation:update(dt)
 end
 
 function Gun:draw()

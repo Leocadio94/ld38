@@ -13,7 +13,7 @@ function Player:new(x, y)
     self.r = 0
     self.g = anim8.newGrid(40, 80, playerAnimation:getWidth(), playerAnimation:getHeight())
 	self.animations = {
-        idle = anim8.newAnimation(self.g('1-3', 1), 0.1),
+        idle = anim8.newAnimation(self.g('1-3', 1), 0.3),
         running = anim8.newAnimation(self.g('1-3', 2), 0.1)
     }
     self.animation = self.animations.idle

@@ -9,7 +9,7 @@ function Planet:new(x, y)
     self.ox = self.width / 2
     self.oy = self.height / 2
     self.r = 0
-    self.acc = 5
+    self.acc = 3
 end
 
 function Planet:update(dt)
