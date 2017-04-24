@@ -17,6 +17,7 @@ function Player:new(x, y)
         running = anim8.newAnimation(self.g('1-3', 2), 0.1)
     }
     self.animation = self.animations.idle
+    self.lives = 3
 
     bornSound:play()
 end
