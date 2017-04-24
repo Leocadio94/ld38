@@ -17,6 +17,10 @@ function Gun:new(x, y)
         shoot = anim8.newAnimation(self.g('1-3', 2), 0.1)
     }
     self.animation = self.animations.idle
+    self.bullets = {}
+	self.canShoot = true
+	self.canShootTimerMax = 0.2
+	self.canShootTimer = self.canShootTimerMax
 end
 
 function Gun:update(dt)
@@ -28,17 +32,38 @@ function Gun:update(dt)
         self.sx = -1
     end
 
-    if input.space then
-        self.animation = self.animations.shoot
-    else
+    self.canShootTimer = self.canShootTimer - (1 * dt)
+	if self.canShootTimer < 0 then
+		self.canShoot = true
+	end
+
+	if input.space and self.canShoot then
+		self:shoot()
+        self.canShoot = false
+        self.canShootTimer = self.canShootTimerMax
+	else
         self.animation = self.animations.idle
     end
 
     self.animation:update(dt)
+
+    for v,bul in ipairs(self.bullets) do
+        bul:update(dt)
+    end
 end
 
 function Gun:draw()
     self.animation:draw(gunAnimation, self.x, self.y, self.r, self.sx, self.sy, self.ox, self.oy)
+
+    for v,bul in ipairs(self.bullets) do
+        bul:draw()
+    end
 end
 
+
+function Gun:shoot ()
+    self.animation = self.animations.shoot
+    bullet = require "classes/bullet" (self.x, self.y, self.sx)
+    table.insert(self.bullets, bullet)
+end
 return Gun
