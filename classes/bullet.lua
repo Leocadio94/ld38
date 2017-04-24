@@ -1,6 +1,6 @@
 local Bullet = Object:extend()
 
-function Bullet:new(x, y, direction)
+function Bullet:new(x, y, direction, rotate)
     self.sprite = bulletSprite
     self.x = x
     self.y = y
@@ -10,13 +10,16 @@ function Bullet:new(x, y, direction)
     self.oy = self.height / 2
     self.direction = direction
 	self.speed = 800
+    self.r = rotate
 end
 
 function Bullet:update(dt)
     if self.direction == 1 then
-        self.x = self.x + self.speed*dt
+        self.x = self.x + self.speed * dt * math.cos(self.r)
+        self.y = self.y + self.speed * dt * math.sin(self.r)
     elseif self.direction == -1 then
-        self.x = self.x - self.speed*dt
+        self.x = self.x - self.speed *dt
+        self.y = self.y + self.r * dt
     end
 end
 

@@ -21,33 +21,46 @@ function Gun:new(x, y)
 	self.canShoot = true
 	self.canShootTimerMax = 0.3
 	self.canShootTimer = self.canShootTimerMax
+    self.direction = 1
+    self.speed = 5
 end
 
 function Gun:update(dt)
+    print (self.r)
+    if input.up then
+        if self.sx == 1 then
+            if self.r > -1 then
+                self.r = self.r - self.speed * dt
+            end
+        else
+            if self.r < 1 then
+                self.r = self.r + self.speed * dt
+            end
+        end
+    elseif input.down then
+        if self.sx == 1 then
+            if self.r < 1 then
+                self.r = self.r + self.speed * dt
+            end
+        else
+            if self.r > -1 then
+                self.r = self.r - self.speed * dt
+            end
+        end
+    end
+
+
     if player.sx == 1 then
-        self.x = player.x + player.ox + 5
+        self.direction = 1
         self.sx = 1
     elseif player.sx == -1 then
-        self.x = player.x - player.ox - 5
+        self.direction = -1
         self.sx = -1
     end
 
-    self.canShootTimer = self.canShootTimer - (1 * dt)
-	if self.canShootTimer < 0 then
-		self.canShoot = true
-	end
+    self.x = player.x + player.ox * self.direction + self.speed * dt
 
-	if input.space then
-        self.animation = self.animations.shoot
-
-        if self.canShoot then
-    		self:shoot()
-            self.canShoot = false
-            self.canShootTimer = self.canShootTimerMax
-        end
-	else
-        self.animation = self.animations.idle
-    end
+    self:shoot(dt)
 
     for v,bul in ipairs(self.bullets) do
         bul:update(dt)
@@ -68,9 +81,24 @@ function Gun:draw()
 end
 
 
-function Gun:shoot ()
-    self.animation = self.animations.shoot
-    bullet = require "classes/bullet" (self.x, self.y, self.sx)
-    table.insert(self.bullets, bullet)
+function Gun:shoot (dt)
+    self.canShootTimer = self.canShootTimer - (1 * dt)
+	if self.canShootTimer < 0 then
+		self.canShoot = true
+	end
+
+    if input.space then
+        self.animation = self.animations.shoot
+
+        if self.canShoot then
+            bullet = require "classes/bullet" (self.x, self.y - 5, self.sx, self.r)
+            table.insert(self.bullets, bullet)
+            self.canShoot = false
+            self.canShootTimer = self.canShootTimerMax
+        end
+    else
+        self.animation = self.animations.idle
+    end
 end
+
 return Gun
