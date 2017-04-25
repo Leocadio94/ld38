@@ -6,7 +6,6 @@ gameLevel1 = require 'gamestates.gamelevel1'
 pause = require 'gamestates.pause'
 
 function love.load()
-    -- Grab window size
 	gameWidth, gameHeight = 800, 600
 	windowWidth  = love.graphics.getWidth()
 	windowHeight = love.graphics.getHeight()
@@ -26,7 +25,7 @@ function love.load()
 end
 
 function love.update(dt)
-	lurker.update()
+	--lurker.update()
 	input:update()
 end
 

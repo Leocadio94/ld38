@@ -35,6 +35,9 @@ function GameLevel1:update(dt)
 			if ene:checkCollision(player) then
 				table.remove(enemies, j)
 				player.lives = player.lives - 1
+				playerDamageSound:play()
+				love.timer.sleep(0.001)
+				playerDamageSound:rewind()
 			end
 		end
 
@@ -44,6 +47,9 @@ function GameLevel1:update(dt)
 					table.remove(enemies, j)
 					table.remove(gun.bullets, i)
 					score = score + 100 * level
+					enemyDeathSound:play()
+		            love.timer.sleep(0.001)
+		            enemyDeathSound:rewind()
 				end
 			end
 		end

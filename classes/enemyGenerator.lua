@@ -9,7 +9,7 @@ function generateEnemies()
             direction = -1
         end
 
-        enemy = require "classes.enemy" (chosenX + table.getn(enemies) * 2, player.y + table.getn(enemies) * 2, direction)
+        enemy = require "classes.enemy" (chosenX + table.getn(enemies) * 2, player.y + table.getn(enemies) * 2, direction, 50 * (level/2))
 
         table.insert(enemies, enemy)
     end

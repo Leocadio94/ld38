@@ -1,6 +1,6 @@
 local Enemy = Object:extend()
 
-function Enemy:new(x, y, direction)
+function Enemy:new(x, y, direction, speed)
     self.sprite = enemySprite
     self.x = x
     self.y = y
@@ -13,7 +13,7 @@ function Enemy:new(x, y, direction)
     self.r = 0
     self.g = anim8.newGrid(80, 80, enemyAnimation:getWidth(), enemyAnimation:getHeight())
 	self.animation = anim8.newAnimation(self.g('1-3', 1), 0.3)
-	self.speed = 50
+	self.speed = speed
     self.direction = direction
 
     --bornSound:play()
