@@ -1,9 +1,9 @@
 require "classes.libs"
 require "classes.assets"
 
-local mainMenu = require 'gamestates.mainmenu'
-local gameLevel1 = require 'gamestates.gamelevel1'
-local pause = require 'gamestates.pause'
+mainMenu = require 'gamestates.mainmenu'
+gameLevel1 = require 'gamestates.gamelevel1'
+pause = require 'gamestates.pause'
 
 function love.load()
     -- Grab window size
@@ -13,10 +13,16 @@ function love.load()
 
 	push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false})
 
+    centerX = gameWidth / 2
+    centerY = gameHeight / 2
+
 	input = require "classes.input"
 
+	gameMusic:setLooping(true)
+	gameMusic:play()
+
 	Gamestate.registerEvents()
-    Gamestate.switch(gameLevel1)
+    Gamestate.switch(mainMenu)
 end
 
 function love.update(dt)

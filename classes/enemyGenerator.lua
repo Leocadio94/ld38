@@ -1,13 +1,11 @@
-local spawnEnemiesMax = 4
+local spawnEnemiesMax = 3
 
 function generateEnemies()
     for i = 1, spawnEnemiesMax do
         local chosenX = lume.randomchoice({0, gameWidth})
         local direction = 1
 
-        if chosenX == 0 then
-            direction = 1
-        else
+        if chosenX == gameWidth then
             direction = -1
         end
 

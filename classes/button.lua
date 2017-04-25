@@ -1,4 +1,4 @@
-Button = Object:extend()
+local Button = Object:extend()
 
 function Button:new(x, y, width, height, text)
 	self.x = x
@@ -14,7 +14,7 @@ function Button:draw()
 	local btn_top = self.y
 	local btn_bottom = self.y + self.height
 	local xGame, yGame = push:toGame(love.mouse.getX(), love.mouse.getY())
-	
+
 	if self:mouseAboveButton(xGame, yGame, btn_left, btn_right, btn_top, btn_bottom) then
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, 50, 50)
@@ -22,13 +22,13 @@ function Button:draw()
 		love.graphics.setColor(0,0,0,50)
 		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, 50, 50)
 	end
-	
+
 	love.graphics.setColor(255, 255, 255, 255)
-	
+
 	local textX = self.x + (self.width / 2)
-	local textY = self.y
-	
-	love.graphics.print(self.text, textX, textY, 0, 1, 1, font:getWidth(self.text)/2, 0)
+	local textY = self.y + (self.height / 4)
+
+	love.graphics.print(self.text, textX, textY, 0, 1, 1, fontBig:getWidth(self.text)/2, 0)
 end
 
 function Button:click()
@@ -37,39 +37,18 @@ function Button:click()
 	local btn_top = self.y
 	local btn_bottom = self.y + self.height
 	local xGame, yGame = push:toGame(love.mouse.getX(), love.mouse.getY())
-	
-	if self:mouseAboveButton(xGame, yGame, btn_left, btn_right, btn_top, btn_bottom) then		
-		if self.text == playText then
-			if enableSounds then selectSound:play() end
-			reset()
-			gameMode = "Play"
-			if enableSounds then bornSound:play() end
-		elseif self.text == optionsText then
-			gameMode = "Options"
-			if enableSounds then selectSound:play() end
-		elseif self.text == fullscreenText then
-			push:switchFullscreen()
-			if enableSounds then selectSound:play() end
-		elseif self.text == musicText then
-			enableMusic = not enableMusic
-			if enableSounds then selectSound:play() end
-		elseif self.text == soundsText then
-			enableSounds = not enableSounds
-			if enableSounds then selectSound:play() end
-		elseif self.text == exitText then
-			love.event.quit()
-			if enableSounds then selectSound:play() end
-		elseif self.text == resumeText then
-			gameMode = "Play"
-			if enableSounds then selectSound:play() end
-		elseif self.text == goBackText then
-			gameMode = "Menu"
-			if enableSounds then selectSound:play() end
-		elseif self.text == gameOverSubTitle then
-			gameMode = "Play"
-			showGameOver = false
-			reset()
-			if enableSounds then selectSound:play() end
+
+	if love.mouse.isDown(1) then
+		if self:mouseAboveButton(xGame, yGame, btn_left, btn_right, btn_top, btn_bottom) then
+			if self.text == playText or self.text == resumeText then
+				Gamestate.switch(gameLevel1)
+			elseif self.text == backText then
+				Gamestate.push(mainMenu)
+			elseif self.text == gameOverSubTitle then
+				Gamestate.push(mainMenu)
+			elseif self.text == exitText then
+				love.event.quit()
+			end
 		end
 	end
 end
@@ -86,3 +65,5 @@ function Button:mouseAboveButton(x, y, left, right, top, bottom)
         end
     end
 end
+
+return Button

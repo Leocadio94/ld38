@@ -14,13 +14,15 @@ function GameLevel1:enter()
 	enemies = {}
 	generateEnemies()
 
-	gameMusic:setLooping(true)
-	gameMusic:play()
+	gameOverTitle = "Game Over!"
+    gameOverSubTitle = "Restart"
+	btnGameOver = require "classes/button" (centerX - 250, centerY, 450, 100, gameOverSubTitle)
 
 	gameOver = false
 end
 
 function GameLevel1:update(dt)
+    love.mouse.setVisible(false)
 	if not gameOver then
 	    background:update(dt)
 
@@ -54,14 +56,21 @@ function GameLevel1:update(dt)
 		if player.lives == 0 then
 			gameOver = true
 		end
+
+		if input.escape then
+			Gamestate.push(pause)
+		end
+	else
+		btnGameOver:click()
 	end
 end
 
 function GameLevel1:draw()
   	push:start()
 
+	background:draw()
+
 	if not gameOver then
-		background:draw()
 
 		planet:draw()
 		player:draw()
@@ -72,6 +81,13 @@ function GameLevel1:draw()
 		end
 
 		drawGui()
+	else
+	    love.mouse.setVisible(true)
+	    love.graphics.setFont(fontBig)
+	    love.graphics.setColor(255, 255, 255, 255)
+	    love.graphics.print(gameOverTitle, centerX, centerY/2, 0, 1, 1, fontBig:getWidth(gameOverTitle)/2, fontBig:getHeight(gameOverTitle)/2)
+	    love.graphics.setFont(fontMedium)
+	    btnGameOver:draw()
 	end
 
     push:finish()

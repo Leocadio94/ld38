@@ -16,3 +16,10 @@ shootSound = love.audio.newSource("assets/sounds/shoot.wav", "static")
 walkSound = love.audio.newSource("assets/sounds/walk.wav", "static")
 
 gameMusic = love.audio.newSource("assets/music/game.wav")
+
+fontBig = love.graphics.newFont("assets/fonts/space_one.ttf", 80)
+fontMedium = love.graphics.newFont("assets/fonts/bm_space.ttf", 60)
+fontSmall = love.graphics.newFont("assets/fonts/bm_space.ttf", 20)
+
+cursor = love.mouse.newCursor("assets/images/cursor.png", 0, 0)
+click = love.mouse.newCursor("assets/images/click.png", 0, 0)
